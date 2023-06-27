@@ -1,64 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <title>sample1</title>
-
-  <!-- three.jsを読み込む(ローカル) -->
-  <!-- <script src="./three.js"></script> -->
-  <!-- three.jsを読み込む(CDN) -->
-  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=B_WHRaf-0xbMzvuNPB6t9smeTbykgEQbhSfPcCtr2A750TWhK8u3HqHHf7Ex4qbOE37jfUp4kV7MbhzFWAF7T_avhTCQYEkxSdeXHe2DIN6tUKfNAamDdVPEbY6lLPsiTua1_nPoWHx76zfx11NcoQ" charset="UTF-8"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
-
+    <meta charset="UTF-8">
+    <title>WebGL</title>
 </head>
-<body>
- <script>
-  var init = function() {
 
-    var width = 800,
-        height = 600;
-  
-    // レンダラーを作成
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize(width, height);
-    document.body.appendChild(renderer.domElement);
-  
-    // シーンを作成
-    var scene = new THREE.Scene();
-  
-    // カメラを作成
-    var camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-  
-    // 箱を作成
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshPhongMaterial({ color: 0x0000ff });
-    var box = new THREE.Mesh(geometry, material);
-    box.position.z = -5;
-    scene.add(box);
-  
-    // 平行光源1
-    var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-    directionalLight1.position.set(1, 1, 1);
-    // シーンに追加
-    scene.add(directionalLight1);
-    // 平行光源2
-        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-    directionalLight2.position.set(-1, 1, 1);
-    // シーンに追加
-    scene.add(directionalLight2);
-  
-    // 初回実行
-    var update = function() {
-      requestAnimationFrame(update);
-  
-      // 箱を回転させる
-      box.rotation.x += 0.01;
-      box.rotation.y += 0.01;
-  
-      renderer.render(scene, camera);
-    };
-    update();
-  }
-  window.addEventListener('DOMContentLoaded', init);
-</script>
+<body>
+    <h1>WebGL演習</h1>
+    <h2>サンプル</h2>
+    <a href="sample.html">sample.html</a>
+    <h2>レポート</h2>
+    <h3><a href="report1.html">レポート1</a></h3>
+    
+    <h3><a href="report2.html">レポート2</a></h3>
+    木のテクスチャが4種類の中からランダムに選ばれるようにした。<br>
+    太陽から光が出ているように光源の位置をあわせた。<br>
+    
 </body>
+
 </html>

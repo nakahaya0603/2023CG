@@ -1,0 +1,112 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <h1>レポート2</h1>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+      
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        // 背景の色を設定
+        renderer.setClearColor(0xffffdd);
+
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 5);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+
+        // helper
+        const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+
+
+        // 地球のテクスチャー読み込み
+        var textureLoader = new THREE.TextureLoader();  
+        var earth_texture = textureLoader.load("img/earth.png");
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = earth_texture;
+        // 球を作成
+        var earth_geometry = new THREE.SphereGeometry(0.5, 16, 16 ); ;
+        var Sphere = new THREE.Mesh(earth_geometry, mat);
+        Sphere.position.set(0,1,0);
+        scene.add(Sphere);
+
+        // 木をスプライトで作成
+        var textureLoader = new THREE.TextureLoader();  
+        var texture1 = textureLoader.load("img/tree0.png");
+        const material1 = new THREE.SpriteMaterial({ map: texture1,});
+        var texture2 = textureLoader.load("img/tree1.png");
+        const material2 = new THREE.SpriteMaterial({ map: texture2,});
+        var texture3 = textureLoader.load("img/tree2.png");
+        const material3 = new THREE.SpriteMaterial({ map: texture3,});
+        var texture4 = textureLoader.load("img/tree3.png");
+        const material4 = new THREE.SpriteMaterial({ map: texture4,});
+
+        //太陽をスプライトで作成
+        var texturesun = textureLoader.load("img/sun.png");
+        const materialsun = new THREE.SpriteMaterial({ map: texturesun,});
+
+        const sprite1 = new THREE.Sprite(materialsun);
+        sprite1.position.x = 10;
+        sprite1.position.y = 10;
+        sprite1.position.z = 10;
+        sprite1.scale.set(10,10,10);
+        scene.add(sprite1);
+
+        // 森を作成
+        array = [material1,material2,material3,material4]
+        for (let i = 0; i < 20; i++) {
+          material = array[[Math.floor(Math.random()*array.length)]]
+          const sprite = new THREE.Sprite(material);
+          // ランダムな座標に配置
+          sprite.position.x = 2 * (Math.random() - 0.5);
+          sprite.position.y = 0.5 * Math.random();
+          sprite.position.z = 2 * (Math.random() - 0.5);
+          // スケールを調整
+          sprite.scale.set(0.5, 0.5, 0.5);
+
+          scene.add(sprite);
+        }
+        
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
+          // 地球を回転させる
+          Sphere.rotation.x += 0.01;
+          Sphere.rotation.y += 0.01;
+        }
+      }
+    </script>
+</body>
